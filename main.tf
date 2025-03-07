@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-west-2" # Specify your desired AWS region
+  region = "us-east-1" # Specify your desired AWS region
 }
 
 data "aws_availability_zones" "available" {}
