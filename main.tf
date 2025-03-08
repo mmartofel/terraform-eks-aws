@@ -23,6 +23,8 @@ resource "aws_subnet" "eks_subnet" {
   vpc_id                 = aws_vpc.eks_vpc.id
   cidr_block             = "10.0.${count.index}.0/24"
   availability_zone      = element(data.aws_availability_zones.available.names, count.index)
+  
+  map_public_ip_on_launch = true  # Enable auto-assign public IPs
 
   tags = {
     Name = "${var.cluster_name}_subnet_${count.index}"
