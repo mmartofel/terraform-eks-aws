@@ -98,3 +98,66 @@ resource "aws_iam_role" "eks_node_role" {
     ]
   })
 }
+
+# NETWORKING SETUP
+
+# Create an Internet Gateway
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.eks_vpc.id
+
+  tags = {
+    Name = "${var.cluster_name}_igw"
+  }
+}
+
+# Create a NAT Gateway
+resource "aws_eip" "nat" {
+  depends_on = [aws_internet_gateway.igw]
+}
+
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.nat.id
+  subnet_id    = aws_subnet.eks_subnet[0].id  # Use a public subnet for the NAT Gateway
+
+  tags = {
+    Name = "${var.cluster_name}_nat"
+  }
+}
+
+# Update the route table for the public subnet
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.eks_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "${var.cluster_name}_public_rt"
+  }
+}
+
+resource "aws_route_table_association" "public" {
+  subnet_id      = aws_subnet.eks_subnet[0].id
+  route_table_id = aws_route_table.public.id
+}
+
+# Update the route table for the private subnet
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.eks_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat.id
+  }
+
+  tags = {
+    Name = "${var.cluster_name}_private_rt"
+  }
+}
+
+resource "aws_route_table_association" "private" {
+  subnet_id      = aws_subnet.eks_subnet[1].id
+  route_table_id = aws_route_table.private.id
+}
