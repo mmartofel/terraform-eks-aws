@@ -3,12 +3,9 @@ accessConfig:
 addonsConfig: {}
 apiVersion: eksctl.io/v1alpha5
 availabilityZones:
-- us-east-1a
-- us-east-1b
-- us-east-1c
-- us-east-1d
-- us-east-1e
-- us-east-1f
+- us-east-2a
+- us-east-2b
+- us-east-2c
 cloudWatch:
   clusterLogging: {}
 iam:
@@ -61,7 +58,7 @@ managedNodeGroups:
   volumeType: gp3
 metadata:
   name: development
-  region: us-east-1
+  region: us-east-2
   version: "1.32"
 privateCluster:
   enabled: false
