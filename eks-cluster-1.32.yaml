@@ -28,7 +28,7 @@ managedNodeGroups:
       awsLoadBalancerController: false
       certManager: false
       cloudWatch: false
-      ebs: false
+      ebs: true
       efs: false
       externalDNS: false
       fsx: false

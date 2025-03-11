@@ -11,7 +11,7 @@ git clone https://github.com/hashicorp-education/learn-terraform-provision-eks-c
 
 eksctl option:
 
-eksctl create cluster -f eks-cluster-1.31.yaml
+eksctl create cluster -f eks-cluster-1.32.yaml
 
 connect to cluster:
 
@@ -21,3 +21,6 @@ kubectl get svc
 
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   13m
+
+EKS documentation:
+https://docs.aws.amazon.com/eks/latest/userguide/quickstart.html
