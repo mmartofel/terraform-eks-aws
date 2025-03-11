@@ -24,3 +24,6 @@ kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   13m
 
 EKS documentation:
 https://docs.aws.amazon.com/eks/latest/userguide/quickstart.html
+
+Hashicorp documentation:
+https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks
